@@ -1,52 +1,28 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
+	<view>
+		<!-- 轮播图 -->
+		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="200" style="width: 750rpx;height: 250rpx;">
+			<swiper-item><image src="../../static/1.jpg" style="width: 750rpx;height: 250rpx;"></image></swiper-item>
+			<swiper-item><image src="../../static/2.jpg" style="width: 750rpx;height: 250rpx;"></image></swiper-item>
+		</swiper>
+
+		<!-- </view> -->
+		<view class="flex flex-wrap">
+			<view class="list-item" v-for="i in 10" :key="i">
+				<image src="../../static/me.jpg" style="width: 365rpx;height: 365rpx;" class="rounded" mode="aspectFill"></image>
+			</view>
 		</view>
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-		}
-	}
-</script>
+<script></script>
 
 <style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+.list-item {
+	width: 375rpx;
+	height: 375rpx;
+	padding: 5rpx;
+	box-sizing: border-box;
+	position: relative;
+}
 </style>
