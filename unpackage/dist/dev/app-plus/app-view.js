@@ -222,22 +222,179 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-uni-view",
-    { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
+    { attrs: { _i: 0 } },
     [
-      _c("v-uni-image", {
-        staticClass: _vm._$g(1, "sc"),
-        attrs: { src: "/static/logo.png", _i: 1 }
-      }),
       _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(2, "sc"), attrs: { _i: 2 } },
+        "v-uni-swiper",
+        {
+          staticStyle: { width: "750rpx", height: "250rpx" },
+          attrs: {
+            "indicator-dots": true,
+            autoplay: true,
+            interval: 3000,
+            duration: 200,
+            _i: 1
+          }
+        },
         [
           _c(
-            "v-uni-text",
-            { staticClass: _vm._$g(3, "sc"), attrs: { _i: 3 } },
-            [_vm._v(_vm._$g(3, "t0-0"))]
+            "v-uni-swiper-item",
+            { attrs: { _i: 2 } },
+            [
+              _c("v-uni-image", {
+                staticStyle: { width: "750rpx", height: "250rpx" },
+                attrs: { src: _vm._$g(3, "a-src"), _i: 3 }
+              })
+            ],
+            1
+          ),
+          _c(
+            "v-uni-swiper-item",
+            { attrs: { _i: 4 } },
+            [
+              _c("v-uni-image", {
+                staticStyle: { width: "750rpx", height: "250rpx" },
+                attrs: { src: _vm._$g(5, "a-src"), _i: 5 }
+              })
+            ],
+            1
           )
         ],
+        1
+      ),
+      _c(
+        "v-uni-view",
+        { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
+        _vm._l(10, function(i, $10, $20, $30) {
+          return _c(
+            "v-uni-view",
+            {
+              key: i,
+              staticClass: _vm._$g("7-" + $30, "sc"),
+              attrs: { _i: "7-" + $30 }
+            },
+            [
+              _c("v-uni-image", {
+                staticClass: _vm._$g("8-" + $30, "sc"),
+                staticStyle: { width: "365rpx", height: "365rpx" },
+                attrs: {
+                  src: _vm._$g("8-" + $30, "a-src"),
+                  mode: "aspectFill",
+                  _i: "8-" + $30
+                }
+              }),
+              _c(
+                "v-uni-view",
+                {
+                  staticClass: _vm._$g("9-" + $30, "sc"),
+                  staticStyle: {
+                    position: "absolute",
+                    left: "15rpx",
+                    top: "15rpx",
+                    "background-color": "rgba(0,0,0,0.4)"
+                  },
+                  attrs: { _i: "9-" + $30 }
+                },
+                [
+                  _c("v-uni-text", {
+                    staticClass: _vm._$g("10-" + $30, "sc"),
+                    attrs: { _i: "10-" + $30 }
+                  }),
+                  _c("v-uni-text", {
+                    staticClass: _vm._$g("11-" + $30, "sc"),
+                    attrs: { _i: "11-" + $30 }
+                  })
+                ],
+                1
+              ),
+              _c(
+                "v-uni-view",
+                {
+                  staticClass: _vm._$g("12-" + $30, "sc"),
+                  staticStyle: {
+                    position: "absolute",
+                    right: "15rpx",
+                    top: "15rpx",
+                    "background-color": "rgba(0,0,0,0.4)"
+                  },
+                  attrs: { _i: "12-" + $30 }
+                },
+                [
+                  _c(
+                    "v-uni-text",
+                    {
+                      staticClass: _vm._$g("13-" + $30, "sc"),
+                      attrs: { _i: "13-" + $30 }
+                    },
+                    [_vm._v("人气：")]
+                  ),
+                  _c(
+                    "v-uni-text",
+                    {
+                      staticClass: _vm._$g("14-" + $30, "sc"),
+                      attrs: { _i: "14-" + $30 }
+                    },
+                    [_vm._v("0")]
+                  )
+                ],
+                1
+              ),
+              _c(
+                "v-uni-view",
+                {
+                  staticClass: _vm._$g("15-" + $30, "sc"),
+                  staticStyle: {
+                    position: "absolute",
+                    left: "15rpx",
+                    bottom: "15rpx"
+                  },
+                  attrs: { _i: "15-" + $30 }
+                },
+                [
+                  _c(
+                    "v-uni-text",
+                    {
+                      staticClass: _vm._$g("16-" + $30, "sc"),
+                      attrs: { _i: "16-" + $30 }
+                    },
+                    [_vm._v("标题")]
+                  )
+                ],
+                1
+              ),
+              _c(
+                "v-uni-view",
+                {
+                  staticClass: _vm._$g("17-" + $30, "sc"),
+                  staticStyle: {
+                    position: "absolute",
+                    right: "15rpx",
+                    bottom: "15rpx",
+                    "background-color": "rgba(0,0,0,0.4)"
+                  },
+                  attrs: { _i: "17-" + $30 }
+                },
+                [
+                  _c("v-uni-text", {
+                    staticClass: _vm._$g("18-" + $30, "sc"),
+                    staticStyle: { width: "20rpx", height: "20rpx" },
+                    attrs: { _i: "18-" + $30 }
+                  }),
+                  _c(
+                    "v-uni-text",
+                    {
+                      staticClass: _vm._$g("19-" + $30, "sc"),
+                      attrs: { _i: "19-" + $30 }
+                    },
+                    [_vm._v("已结束")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        }),
         1
       )
     ],
@@ -332,7 +489,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ./node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.content {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\t-webkit-box-orient: vertical;\n\t-webkit-box-direction: normal;\n\t-webkit-flex-direction: column;\n\t        flex-direction: column;\n\t-webkit-box-align: center;\n\t-webkit-align-items: center;\n\t        align-items: center;\n\t-webkit-box-pack: center;\n\t-webkit-justify-content: center;\n\t        justify-content: center;\n}\n.logo {\n\theight: 200rpx;\n\twidth: 200rpx;\n\tmargin-top: 200rpx;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmargin-bottom: 50rpx;\n}\n.text-area {\n\tdisplay: -webkit-box;\n\tdisplay: -webkit-flex;\n\tdisplay: flex;\n\t-webkit-box-pack: center;\n\t-webkit-justify-content: center;\n\t        justify-content: center;\n}\n.title {\n\tfont-size: 36rpx;\n\tcolor: #8f8f94;\n}\n", ""]);
+exports.push([module.i, "\n.list-item {\r\n\twidth: 375rpx;\r\n\theight: 375rpx;\r\n\tpadding: 5rpx;\r\n\tbox-sizing: border-box;\r\n\tposition: relative;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -1045,7 +1202,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ./node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*每个页面公共css */\n", ""]);
+exports.push([module.i, "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n/*每个页面公共css */\r\n", ""]);
 // Exports
 module.exports = exports;
 
