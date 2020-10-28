@@ -1,72 +1,142 @@
 <template>
 	<view>
 		<!-- 轮播图 -->
-		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="200" style="width: 750rpx;height: 250rpx;">
-			<swiper-item><image src="../../static/1.jpg" style="width: 750rpx;height: 250rpx;"></image></swiper-item>
-			<swiper-item><image src="../../static/2.jpg" style="width: 750rpx;height: 250rpx;"></image></swiper-item>
+		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="200">
+			<swiper-item><image src="../../static/1.jpg" style="width: 750rpx; height: 280rpx;"></image></swiper-item>
+			<swiper-item><image src="../../static/2.jpg" style="width: 750rpx; height: 280rpx;"></image></swiper-item>
 		</swiper>
-
-		<!-- 列表 -->
-		<view class="flex flex-wrap">
-			<view class="list-item" v-for="i in 10" :key="i" @click="openLive">
-				<image src="../../static/me.jpg" style="width: 365rpx;height: 365rpx;" class="rounded" mode="aspectFill"></image>
-				<view
-					class="rounded-circle px-2 flex align-center"
-					style="position: absolute;left: 15rpx;top: 15rpx;background-color: rgba(0,0,0,0.4);"
-				>
-					<text class="iconfont iconbizhongguanli text-warning mr-1"></text>
-					<text class="text-white font"></text>
-				</view>
-
-				<view
-					class="rounded-circle px-2 flex align-center"
-					style="position: absolute;right: 15rpx;top: 15rpx;background-color: rgba(0,0,0,0.4);"
-				>
-					<text class="font-sm text-white">人气：</text>
-					<text class="text-white font-sm">0</text>
-				</view>
-
-				<view class="rounded-circle flex align-center" style="position: absolute;left: 15rpx;bottom: 15rpx;">
-					<text class="text-white font">标题</text>
-				</view>
-				
-				<view
-					class="rounded-circle px-2 flex align-center"
-					style="position: absolute;right: 15rpx;bottom: 15rpx;background-color: rgba(0,0,0,0.4);"
-				>
-				<text style="width: 20rpx;height: 20rpx;" class="rounded-circle bg-danger mr-1"></text>
-				<text class="text-white font-sm">已结束</text>
-				</view>
-			</view>
+		<view class=" flex-2 flex-wrap flex">
+			<list v-for="(item, index) in list" :key="index" :item="item" :index="index" @openLive="openLive"></list>
 		</view>
 	</view>
 </template>
 
 <script>
-	export default{
-		data(){
-			return {
-				
-			}
-		},
-		onLoad(){},
-		methods:{
-			openLive(){
-				uni.navigateTo({
-					url:'../live/live'
-				})
-			}
+import tab from '../../components/common/tab.vue';
+import list from '../../components/common/list.vue';
+export default {
+	components: {
+		tab,
+		list
+	},
+	data() {
+		return {
+			title: 'Hello',
+			list: [
+				{
+					id: 1,
+					image: '../../static/me.jpg',
+					money: 0,
+					colorIndex: 0,
+					moods: 10,
+					title: '标题1',
+					status: '直播中'
+				},
+				{
+					id: 2,
+					image: '../../static/me.jpg',
+					money: 0,
+					colorIndex: 0,
+					moods: 10,
+					title: '标题2',
+					status: '直播中'
+				},
+				{
+					id: 3,
+					image: '../../static/me.jpg',
+
+					colorIndex: 1,
+					money: 0,
+					moods: 10,
+					title: '标题3',
+					status: '已结束'
+				},
+				{
+					id: 4,
+					image: '../../static/me.jpg',
+
+					colorIndex: 1,
+					money: 0,
+					moods: 10,
+					title: '标题4',
+					status: '直播中'
+				},
+				{
+					id: 5,
+					image: '../../static/me.jpg',
+
+					money: 0,
+					colorIndex: 0,
+					moods: 10,
+					title: '标题5',
+					status: '已结束'
+				},
+				{
+					id: 6,
+					image: '../../static/me.jpg',
+
+					money: 0,
+					colorIndex: 0,
+					moods: 10,
+					title: '标题6',
+					status: '已结束'
+				},
+				{
+					id: 7,
+					image: '../../static/me.jpg',
+					money: 0,
+					colorIndex: 0,
+					moods: 10,
+					title: '标题7',
+					status: '直播中'
+				},
+				{
+					id: 8,
+					image: '../../static/me.jpg',
+
+					money: 0,
+					colorIndex: 0,
+					moods: 10,
+					title: '标题8',
+					status: '已结束'
+				},
+				{
+					id: 9,
+					image: '../../static/me.jpg',
+
+					money: 0,
+					colorIndex: 0,
+					moods: 10,
+					title: '标题9',
+					status: '直播中'
+				},
+				{
+					id: 10,
+					image: '../../static/me.jpg',
+					colorIndex: 0,
+					moods: 10,
+					title: '标题10',
+					status: '已结束'
+				}
+			]
+		};
+	},
+	onLoad() {
+		// uni.hideTabBar();
+	},
+	methods: {
+		openLive(e) {
+			uni.navigateTo({
+				url: '../live/live'
+			});
 		}
 	}
-	
+};
 </script>
 
 <style>
-.list-item {
-	width: 375rpx;
-	height: 375rpx;
-	padding: 5rpx;
-	box-sizing: border-box;
-	position: relative;
+.content {
+	width: 100%;
+	height: 100%;
 }
 </style>
