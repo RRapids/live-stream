@@ -8,7 +8,7 @@
 
 		<!-- 列表 -->
 		<view class="flex flex-wrap">
-			<view class="list-item" v-for="i in 10" :key="i">
+			<view class="list-item" v-for="i in 10" :key="i" @click="openLive">
 				<image src="../../static/me.jpg" style="width: 365rpx;height: 365rpx;" class="rounded" mode="aspectFill"></image>
 				<view
 					class="rounded-circle px-2 flex align-center"
@@ -42,7 +42,24 @@
 	</view>
 </template>
 
-<script></script>
+<script>
+	export default{
+		data(){
+			return {
+				
+			}
+		},
+		onLoad(){},
+		methods:{
+			openLive(){
+				uni.navigateTo({
+					url:'../live/live'
+				})
+			}
+		}
+	}
+	
+</script>
 
 <style>
 .list-item {

@@ -271,7 +271,12 @@ var render = function() {
             {
               key: i,
               staticClass: _vm._$g("7-" + $30, "sc"),
-              attrs: { _i: "7-" + $30 }
+              attrs: { _i: "7-" + $30 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
             },
             [
               _c("v-uni-image", {
