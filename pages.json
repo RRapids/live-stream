@@ -22,9 +22,16 @@
 					"titleNView": false
 				}
 			}
+		}, {
+			"path": "components/live/f-gift",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	    ,{
-            "path" : "components/live/f-gift",
+            "path" : "components/live/f-danmu",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
