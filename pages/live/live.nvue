@@ -41,9 +41,9 @@
 			</view>
 			<!-- 收到礼物 -->
 			<f-gift ref="gift"></f-gift>
-				
+
 			<!-- 弹幕 -->
-			<f-danmu></f-danmu>
+			<f-danmu ref="danmu"></f-danmu>
 
 			<!-- 底部 -->
 			<view style="height: 120rpx;" class="flex align-center justify-between fixed-bottom">
@@ -57,16 +57,33 @@
 					<view class="btn btn-icon bg-warning"><text class="iconfont">&#xe607;</text></view>
 				</view>
 			</view>
+			<!-- 输入弹出框 -->
+			<uni-popup type="bottom" ref="input">
+				<view class="bg-white flex align-center px-3" style="height: 120rpx;">
+					<input
+						type="text"
+						style="height: 80rpx;"
+						v-model="content"
+						class="border rounded flex-1 px-3 font-md"
+						placeholder="说点什么..."
+					/>
+					<view
+						class="flex align-center justify-center py-2 px-2 ml-3 rounded"
+						@click="submit"
+						:class="content === '' ? 'bg-main-disabled' : 'bg-main'"
+					>
+						<text class="font text-white">发送</text>
+					</view>
+				</view>
+			</uni-popup>
 		</view>
-
-		<!-- 弹幕 -->
-		<view style="position: fixed;bottom: 120rpx;left: 0;right: 0;width: 750rpx;height: 300rpx;" class="bg-main"><text>弹幕区</text></view>
 	</view>
 </template>
 
 <script>
 import fGift from '@/components/live/f-gift.vue';
-import fDanmu from '@/components/live/f-danmu.vue'
+import fDanmu from '@/components/live/f-danmu.vue';
+import uniPopup from '@/components/uni-ui/uni-popup/uni-popup.vue';
 export default {
 	components: {
 		fGift,
@@ -93,6 +110,31 @@ export default {
 	onLoad() {
 		let res = uni.getSystemInfoSync();
 		this.statusBarHeight = res.statusBarHeight;
+	},
+	methods: {
+		// 打开输入弹幕的对话框
+		openInput() {
+			this.$refs.input.open();
+		},
+		// 提交发送弹幕信息
+		submit() {
+			if (this.content === '') {
+				return;
+			}
+			this.$refs.danmu.send({
+				id: Math.random() * 100,
+				name: '陶然然',
+				content: this.content
+			});
+			this.content = '';
+			this.$refs.input.close();
+		},
+		// 返回上一层页面
+		back() {
+			uni.navigateBack({
+				delta: 1
+			});
+		}
 	}
 };
 </script>
