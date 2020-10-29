@@ -38,8 +38,11 @@ export default {
 	},
 	data() {
 		return {
-			color: ['red', 'green']
+			color: ['blue', 'red']
 		};
+	},
+	onLoad() {
+		console.log(this.index)
 	}
 };
 </script>

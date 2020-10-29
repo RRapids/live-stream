@@ -17,8 +17,10 @@ export default {
 </script>
 
 <style>
-	/*每个页面公共css */
-	@import url("./common/icon.css");
-	@import url("./common/common.css");
-	@import url("./common/free.css");
+/*每个页面公共css */
+@import url('./common/common.css');
+@import url('./common/free.css');
+/* #ifndef APP-PLUS-NVUE */
+@import url('./common/icon.css');
+/* #endif */
 </style>

@@ -36,93 +36,16 @@ export default {
 					id: 2,
 					image: '../../static/me.jpg',
 					money: 0,
-					colorIndex: 0,
+					colorIndex: 1,
 					moods: 10,
 					title: '标题2',
-					status: '直播中'
-				},
-				{
-					id: 3,
-					image: '../../static/me.jpg',
-
-					colorIndex: 1,
-					money: 0,
-					moods: 10,
-					title: '标题3',
-					status: '已结束'
-				},
-				{
-					id: 4,
-					image: '../../static/me.jpg',
-
-					colorIndex: 1,
-					money: 0,
-					moods: 10,
-					title: '标题4',
-					status: '直播中'
-				},
-				{
-					id: 5,
-					image: '../../static/me.jpg',
-
-					money: 0,
-					colorIndex: 0,
-					moods: 10,
-					title: '标题5',
-					status: '已结束'
-				},
-				{
-					id: 6,
-					image: '../../static/me.jpg',
-
-					money: 0,
-					colorIndex: 0,
-					moods: 10,
-					title: '标题6',
-					status: '已结束'
-				},
-				{
-					id: 7,
-					image: '../../static/me.jpg',
-					money: 0,
-					colorIndex: 0,
-					moods: 10,
-					title: '标题7',
-					status: '直播中'
-				},
-				{
-					id: 8,
-					image: '../../static/me.jpg',
-
-					money: 0,
-					colorIndex: 0,
-					moods: 10,
-					title: '标题8',
-					status: '已结束'
-				},
-				{
-					id: 9,
-					image: '../../static/me.jpg',
-
-					money: 0,
-					colorIndex: 0,
-					moods: 10,
-					title: '标题9',
-					status: '直播中'
-				},
-				{
-					id: 10,
-					image: '../../static/me.jpg',
-					colorIndex: 0,
-					moods: 10,
-					title: '标题10',
 					status: '已结束'
 				}
 			]
 		};
 	},
 	onLoad() {
-		// uni.hideTabBar();
+		// uni.hideTabBar()
 	},
 	methods: {
 		openLive(e) {
