@@ -95,7 +95,7 @@
 								:class="giftActiveId === item.id ? 'border border-main' : ''"
 								@click="giftActiveId = item.id"
 							>
-								<image :src="item.iamge" style="width: 100rpx; height: 100rpx;" class="rounded"></image>
+								<image :src="item.image" style="width: 100rpx; height: 100rpx;" class="rounded"></image>
 								<view class="flex mt-1">
 									<text class="text-warning font mr-1">{{ item.name }}</text>
 									<text class="text-secondary font">{{ item.coin }}</text>

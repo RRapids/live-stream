@@ -68,7 +68,7 @@ export default {
 	methods: {
 		chooseCoin(index){
 			this.activeIndex = index
-			let p = this.list[].price
+			let p = this.list[index].price
 			if(p>0){
 				this.price = p
 			}else{
@@ -76,11 +76,11 @@ export default {
 				this.$refs.popup.open()
 			}
 		},
-		// 
+		//
 		close(done){
 			done()
 		},
-		// 
+		//
 		confirm(done,value){
 			console.log(value)
 			if(!value){
