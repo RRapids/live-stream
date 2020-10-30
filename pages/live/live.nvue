@@ -6,13 +6,7 @@
 			<!-- 个人信息|观看详细信息 -->
 			<view style="height: 80rpx;" class="px-2 flex justify-center align-center">
 				<view style="width: 325rpx;background-color: rgba(0,0,0,0.4);" class="flex rounded-circle">
-					<view class="p">
-						<image
-							src="../../static/me.jpg"
-							style="width: 70rpx; height: 70rpx;"
-							class="rounded-circle"
-						></image>
-					</view>
+					<view class="p"><image src="../../static/me.jpg" style="width: 70rpx; height: 70rpx;" class="rounded-circle"></image></view>
 
 					<view class="flex-1 flex flex-column justify-center">
 						<text class="text-white font">Rapid</text>
@@ -20,10 +14,7 @@
 					</view>
 
 					<view class="p">
-						<view
-							class="rounded-circle flex align-center justify-center bg-danger"
-							style="width: 70rpx;height: 70rpx;"
-						>
+						<view class="rounded-circle flex align-center justify-center bg-danger" style="width: 70rpx;height: 70rpx;">
 							<text class="text-white">+</text>
 						</view>
 					</view>
@@ -36,10 +27,7 @@
 						</view>
 					</scroll-view>
 					<view class="p">
-						<view
-							class="rounded-circle flex align-center justify-center bg-danger"
-							style="width: 70rpx; height: 70rpx;"
-						>
+						<view class="rounded-circle flex align-center justify-center bg-danger" style="width: 70rpx; height: 70rpx;">
 							<text class="text-white font-sm">999</text>
 						</view>
 					</view>
@@ -55,29 +43,15 @@
 			</view>
 
 			<!-- 礼物区 -->
-			<!-- <view style="height: 300rpx;" class="bg-main"><text>礼物区</text></view> -->
 			<f-gift ref="gift"></f-gift>
 		</view>
 
-		<!-- 弹幕 -->
-		<!-- <view
-			style="position: fixed; bottom: 120rpx; left: 0; right: 0; width: 750rpx; height: 300rpx;"
-			class="bg-main"
-		>
-			<text>弹幕区</text>
-		</view> -->
 		<f-danmu ref="danmu"></f-danmu>
 
 		<!-- 输入框弹出层 -->
 		<uni-popup type="bottom" ref="input">
 			<view class="bg-white flex align-center px-3" style="height: 120rpx;">
-				<input
-					type="text"
-					v-model="content"
-					class="border rounded flex-1 px-3 font-md"
-					placeholder="说点什么吧..."
-					style="height: 80rpx;"
-				/>
+				<input type="text" v-model="content" class="border rounded flex-1 px-3 font-md" placeholder="说点什么吧..." style="height: 80rpx;" />
 				<view
 					class="flex align-center justify-center py-2 px-2 ml-3 rounded"
 					@click="sumbit"
@@ -94,15 +68,50 @@
 				<view class="btn px-3"><text class="text-white font">说点什么...</text></view>
 			</view>
 			<view class="flex align-center">
-				<view class="btn btn-icon">
-					<text class="iconfont text-white" style="font-size: 40px;">&#xe633;</text>
-				</view>
-				<view class="btn btn-icon bg-warning"><text class="iconfont">&#xe67c;</text></view>
+				<view class="btn btn-icon"><text class="iconfont text-white" style="font-size: 40px;">&#xe633;</text></view>
+				<view class="btn btn-icon bg-main" @click="openGift"><text class="iconfont">&#xe67c;</text></view>
 				<view class="btn btn-icon"><text class="iconfont text-white">&#xe7cd;</text></view>
 				<view class="btn btn-icon"><text class="iconfont text-white">&#xe607;</text></view>
 			</view>
 		</view>
-		
+
+		<!-- 礼物弹出层 -->
+		<uni-popup type="bottom" ref="giftPopup">
+			<view class="bg-white" style="width: 750rpx;height: 550rpx;">
+				<view class="flex justify-between align-center" style="height: 100rpx;">
+					<text class="text-main font-md ml-3">礼物</text>
+					<view class="flex align-center justify-center" style="width: 100rpx;height: 100rpx;" @click="closeGift">
+						<text class="iconfont">&#xe607;</text>
+					</view>
+				</view>
+				<swiper :indicator-dots="true" :duration="500" style="height: 350rpx;" class="border-bottom border-top">
+					<swiper-item>
+						<view class="flex flex-wrap">
+							<view
+								style="width: 187rpx; height: 175rpx;"
+								class="flex flex-column justify-center align-center"
+								v-for="(item, index) in gifts"
+								:key="index"
+								:class="giftActiveId === item.id ? 'border border-main' : ''"
+								@click="giftActiveId = item.id"
+							>
+								<image :src="item.iamge" style="width: 100rpx; height: 100rpx;" class="rounded"></image>
+								<view class="flex mt-1">
+									<text class="text-warning font mr-1">{{ item.name }}</text>
+									<text class="text-secondary font">{{ item.coin }}</text>
+								</view>
+							</view>
+						</view>
+					</swiper-item>
+				</swiper>
+				<view class="flex align-center justify-end" style="height: 100rpx;">
+					<view class="flex align-center justify-center px-2 mr-3 rounded bg-warning"><text class="font">充值</text></view>
+					<view class="flex align-center justify-center py-2 px-2 mr-3 rounded bg-main" @click="sendGift">
+						<text class="font text-white">发送</text>
+					</view>
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -110,11 +119,20 @@
 import fGift from '@/components/live/f-gift.vue';
 import fDanmu from '@/components/live/f-danmu.vue';
 import uniPopup from '@/components/uni-ui/uni-popup/uni-popup.vue';
+import myGifts from '@/common/gifts.js';
 export default {
 	components: {
 		fGift,
 		fDanmu,
 		uniPopup
+	},
+	data() {
+		return {
+			statusBarHeight: 0,
+			content: '',
+			gifts: [],
+			giftActiveId: 0
+		};
 	},
 	mounted() {
 		// 送礼物演示
@@ -128,15 +146,10 @@ export default {
 			});
 		}, 3000);
 	},
-	data() {
-		return {
-			statusBarHeight: 0,
-			content: ''
-		};
-	},
 	onLoad() {
 		let res = uni.getSystemInfoSync();
 		this.statusBarHeight = res.statusBarHeight;
+		this.gifts = myGifts;
 	},
 	methods: {
 		//打开输入弹幕的对话框
@@ -161,6 +174,33 @@ export default {
 			uni.navigateBack({
 				delta: 1
 			});
+		},
+		openGift() {
+			this.$refs.giftPopup.open();
+		},
+		closeGift() {
+			this.$refs.giftPopup.close();
+		},
+		sendGift() {
+			if (this.giftActiveId === 0) {
+				return uni.showToast({
+					title: '请选择要发送的礼物',
+					icon: 'none'
+				});
+			}
+			let index = this.gifts.findIndex(item => item.id === this.giftActiveId);
+			if (index === -1) {
+				return;
+			}
+			let g = this.gifts[index];
+			this.$refs.gift.send({
+				username: 'YTF',
+				avatar: '',
+				gift_name: g.name,
+				gift_image: g.image,
+				num: 10
+			});
+			this.closeGift()
 		}
 	}
 };

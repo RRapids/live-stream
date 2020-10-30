@@ -29,17 +29,25 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "components/live/f-danmu",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/coin/coin",
+			"style": {
+
+				"navigationBarTitleText": "我的余额",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "black"
+			}
+
 		}
-	    ,{
-            "path" : "components/live/f-danmu",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		// "navigationBarTextStyle": "white",
 		// "navigationBarTitleText": "直播",
