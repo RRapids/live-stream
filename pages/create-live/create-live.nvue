@@ -1,0 +1,123 @@
+<template>
+	<view>
+		<live-pusher
+			id="livePusher"
+			ref="livePusher"
+			class="livePusher"
+			:url="url"
+			:mode="mode"
+			:enable-camera="enableCamera"
+			:auto-focus="true"
+			:device-positon="position"
+			:beauty="beauty"
+			:whiteness="whiteness"
+			aspect="9:16"
+		></live-pusher>
+	</view>
+</template>
+
+<script>
+import uniPopup from '@/components/uni-ui/uni-popup/uni-popup-dialog.vue';
+export default {
+	components: {
+		uniPopup
+	},
+	data() {
+		return {
+			url: '', //直播服务器地址
+			mode: 'SD', //标清模式
+			enableCamera: true, //是否启用摄像头
+			position: 'back', //默认摄像头
+			beauty: 0, //美颜度
+			whiteness: 0, //美白读
+			windowHeight: 0, //窗体高度
+			context: null, //上下文
+			statusBarHeight: 0,
+			modeList: [
+				{
+					type: 'SD',
+					desc: '标清'
+				},
+				{
+					type: 'HD',
+					desc: '高清'
+				},
+				{
+					type: 'FHD',
+					desc: '超清'
+				}
+			],
+			popupType: 'mode'
+		};
+	},
+	//监听页面加载，其参数为上个页面传递的数据，参数类型为Object(用于页面传参)
+	onLoad() {
+		let res = uni.getSystemInfoSync();
+		this.windowHeight = res.windowHeight;
+		this.statusBarHeight = res.statusBarHeight;
+	},
+	//监听页面初次渲染完成，注意如果渲染速度快，会在页面进入动画完成前触发
+	onReady() {
+		this.context = uni.createLivePusherContext('livePusher', this);
+		this.startPreview();
+	},
+	computed: {
+		popupTitle() {
+			let o = {
+				mode: '画质',
+				beauty: '美颜',
+				whiteness: '美白'
+			};
+			return o[this.popupType];
+		}
+	},
+	methods: {
+		handleSliderChange(e) {
+			this[this.popupType] = e.detail.value;
+		},
+		//开启预览
+		startPreview() {
+			this.context.startPreview({
+				success: e => {
+					console.log(e);
+				}
+			});
+		},
+		//切换摄像头
+		switchCamera() {
+			this.context.switchCamera({
+				success: e => {
+					this.position = this.position === 'back' ? 'front' : 'back';
+				}
+			});
+		},
+		//画质选择
+		chooseMode(item) {
+			this.mode = item.type;
+			uni.showToast({
+				title: '画质切换为' + item.desc,
+				icon: 'none'
+			});
+			this.$refs.popup.close();
+		},
+		openPopup(type) {
+			this.popupType = type;
+			this.$refs.popup.open();
+		},
+		//直播状态的变化
+		statechange(e) {
+			console.log(e);
+		},
+		//直播网络的变化
+		netstatus(e) {
+			console.log(e);
+		},
+		//直播出错
+		error(e) {
+			console.log(e);
+		}
+	}
+};
+</script>
+
+<style></style>

@@ -49,6 +49,12 @@
 				"navigationBarTextStyle": "black"
 			}
 
+		}, {
+			"path": "pages/create-live/create-live",
+			"style": {
+				"app-plus": false
+			}
+
 		}
 	],
 	"globalStyle": {
