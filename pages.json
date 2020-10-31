@@ -52,7 +52,9 @@
 		}, {
 			"path": "pages/create-live/create-live",
 			"style": {
-				"app-plus": false
+				"app-plus": {
+					"titleNView":false
+				}
 			}
 
 		}
