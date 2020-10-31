@@ -42,11 +42,11 @@
 					<text class="iconfont text-white mb-1">&#xe60c;</text>
 					<text class="text-white font">画质</text>
 				</view>
-				<view sytle="height:120rpx;width:100rpx" class="flex flex-column align-center justify-center" @click="openPopup('beauty')">
+				<view sytle="height:120rpx;width:100rpx" class="flex flex-column align-center justify-center">
 					<text class="iconfont text-white mb-1">&#xe632;</text>
 					<text class="text-white font">美颜</text>
 				</view>
-				<view sytle="height:120rpx;width:100rpx" class="flex flex-column align-center justify-center" @click="openPopup('whiteness')">
+				<view sytle="height:120rpx;width:100rpx" class="flex flex-column align-center justify-center">
 					<text class="iconfont text-white mb-1">&#xe631;</text>
 					<text class="text-white font">美白</text>
 				</view>
@@ -75,14 +75,6 @@
 						<text class="font-md" :class="mode === item.type ? 'text-white' : ''">{{ item.desc }}</text>
 					</view>
 				</view>
-				<!-- 美颜 -->
-				<view v-else-if="popupType === 'beauty'">
-					<slider :min="0" :max="9" :step="1" :value="beauty" :block-size="18" show-value @change="handleSliderChange"></slider>
-				</view>
-				<!-- 美白 -->
-				<view v-else>
-					<view :min="0" :max="9" :step="1" :value="whiteness" :block-size="18" show-value @change="handleSliderChange"></view>
-				</view>
 				<view class="f-divider"></view>
 				<view class="flex align-center justify-center" style="height: 90rpx;" hover-class="bg-light"><text class="font-md">取消</text></view>
 			</view>
@@ -91,6 +83,7 @@
 </template>
 
 <script>
+// 引入弹出层
 import uniPopup from '@/components/uni-ui/uni-popup/uni-popup-dialog.vue';
 export default {
 	components: {
@@ -135,33 +128,21 @@ export default {
 		this.context = uni.createLivePusherContext('livePusher', this);
 		this.startPreview();
 	},
-	computed: {
-		popupTitle() {
-			let o = {
-				mode: '画质',
-				beauty: '美颜',
-				whiteness: '美白'
-			};
-			return o[this.popupType];
-		}
-	},
+	computed: {},
 	methods: {
-		handleSliderChange(e) {
-			this[this.popupType] = e.detail.value;
+		//切换摄像头
+		switchCamera() {
+			this.context.switchCamera({
+				success: e => {
+					this.position = this.position === 'back' ? 'front' : 'back';
+				}
+			});
 		},
 		//开启预览
 		startPreview() {
 			this.context.startPreview({
 				success: e => {
 					console.log(e);
-				}
-			});
-		},
-		//切换摄像头
-		switchCamera() {
-			this.context.switchCamera({
-				success: e => {
-					this.position = this.position === 'back' ? 'front' : 'back';
 				}
 			});
 		},
