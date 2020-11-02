@@ -6,72 +6,90 @@
 			class="livePusher"
 			:url="url"
 			:mode="mode"
-			:enable-camera="enanleCamera"
+			:enable-camera="enableCamera"
 			:auto-focus="true"
 			:device-position="position"
 			:beauty="beauty"
-			:whiteness="whiteness"
+			:whitness="whitness"
 			aspect="9:16"
 			@statechange="statechange"
 			@netstatus="netstatus"
 			@error="error"
-			:style="'height: ' + windowHeight + 'px;'"
-			style="width: 750rpx;"
+			:style="'height:' + windowHeight + 'px'"
+			style="width: 750rpx; "
 		></live-pusher>
-
 		<!-- 头部 -->
-		<view style="position: fixed; left: 0; right: 0;" :style="'top:' + statusBarHeight + 'px'">
-			<!-- 个人信息| 观看详情信息 -->
+		<view style="position: fixed; left: 0;right: 0;" :style="'top:' + statusBarHeight + 'px'">
+			<!-- 个人信息 -->
 			<view style="height: 80rpx;" class="px-2 flex justify-between align-center">
 				<view style="width: 325rpx; background-color: rgba(0,0,0,0.4);" class="flex rounded-circle">
-					<view class="p"><image src="../../static/beijing1.jpg" style="width: 70rpx; height: 70rpx;" class="rounded-circle"></image></view>
+					<view class="p">
+						<image
+							src="../../static/me.jpg"
+							style="width: 70rpx;height: 70rpx;"
+							class="rounded-circle"
+						></image>
+					</view>
 					<view class="flex-1 flex flex-column justify-center">
-						<text class="text-white font">Martin</text>
-						<text class="text-white font-sm">888</text>
+						<text class="text-white font">KK</text>
+						<text class="text-white font-sm">999</text>
 					</view>
 					<view class="p">
-						<view class="rounded-circle flex align-center justify-center bg-main" style="width: 70rpx;height: 70rpx;">
+						<view
+							class="rounded-circle flex align-center justify-center bg-main"
+							style="width: 70rpx;height: 70rpx;"
+						>
 							<text class="text-white">+</text>
 						</view>
 					</view>
 				</view>
-
 				<view style="width: 325rpx; background-color: rgba(0,0,0,0.4);" class="flex rounded-circle">
 					<scroll-view scroll-x="true" class="flex-1 flex">
-						<view class="p" v-for="i in 15" :key="i">
-							<image src="../../static/gift/6.png" style="width: 70rpx;height: 70rpx;" class="rounded-circle"></image>
+						<view class="p" v-for="i in 10" :key="i">
+							<image
+								src="../../static/me.jpg"
+								style="width: 70rpx;height: 70rpx;"
+								class="rounded-circle"
+							></image>
 						</view>
 					</scroll-view>
 					<view class="p">
-						<view class="rounded-circle flex align-center justify-center bg-main" style="width: 70rpx; height: 70rpx;">
+						<view
+							class="rounded-circle flex align-center justify-center bg-main"
+							style="width: 70rpx; height: 70rpx;"
+						>
 							<text class="text-white font-sm">1000</text>
 						</view>
 					</view>
 				</view>
 			</view>
 			<!-- 金币 -->
-			<view style="height: 80rpx;" class="px-2 my-2">
-				<view style="width: 325rpx; background-color: rgba(0,0,0,0.4);" class="flex rounded-circle align-center">
+			<view style="height: 80rpx;" class="px-2 py-2">
+				<view
+					style="width: 325rpx; background-color: rgba(0,0,0,0.4);"
+					class="flex rounded-circle align-center"
+				>
 					<view class="p"><text class="text-warning">金币</text></view>
-					<view class="flex flex-1 flex-column justify-center"><text class="text-white font">100</text></view>
+					<view class="flex-1 flex flex-column justify-center"><text class="text-white font">100</text></view>
 				</view>
 			</view>
-
-			<!-- 收到礼物 -->
+			<!-- 收到的礼物 -->
 			<f-gift ref="gift"></f-gift>
 		</view>
-
 		<!-- 弹幕 -->
 		<f-danmu ref="danmu"></f-danmu>
-
 		<!-- 底部 -->
-		<view style="position: fixed; left: 0;bottom: 0;right: 0; height: 120rpx;" class="flex align-center justify-center">
-			<view class="flex-1 flex-column align-center justify-center" v-for="(item, index) in btns" :key="index" @click="handleBottomEvent(item)">
+		<view style="position: fixed; left: 0; bottom: 0; right: 0; height: 120rpx;" class="flex align-center jub ">
+			<view
+				class="flex-1 flex flex-column align-center justify-center"
+				v-for="(item, index) in btns"
+				:key="index"
+				@click="handleBottomEvent(item)"
+			>
 				<text class="iconfont text-white mb-1">{{ item.icon }}</text>
 				<text class="text-white font">{{ item.name }}</text>
 			</view>
 		</view>
-
 		<uni-popup type="bottom" ref="popup">
 			<view class="bg-white">
 				<view class="flex align-center justify-center border-bottom" style="height: 90rpx;">
@@ -83,7 +101,7 @@
 						class="flex align-center justify-center py-2"
 						v-for="(item, index) in modeList"
 						:key="index"
-						:class="mode === item.type ? 'text-main' : ''"
+						:class="mode == item.type ? 'bg-main ' : ''"
 						@click="chooseMode(item)"
 					>
 						<text class="font-md" :class="mode === item.type ? 'text-white' : ''">{{ item.desc }}</text>
@@ -91,11 +109,27 @@
 				</view>
 				<!-- 美颜 -->
 				<view v-else-if="popupType === 'beauty'">
-					<slider :min="0" :max="9" :step="1" :value="beauty" :block-size="18" show-value @change="handleSliderChange" />
+					<slider
+						:min="0"
+						:max="9"
+						:step="1"
+						:value="beauty"
+						:block-size="18"
+						show-value
+						@change="handleSliderChange"
+					/>
 				</view>
 				<!-- 美白 -->
 				<view v-else-if="popupType === 'whiteness'">
-					<slider :min="0" :max="9" :step="1" :value="whiteness" :block-size="18" show-value @change="handleSliderChange" />
+					<slider
+						:min="0"
+						:max="9"
+						:step="1"
+						:value="whiteness"
+						:block-size="18"
+						show-value
+						@change="handleSliderChange"
+					/>
 				</view>
 				<!-- 更多 -->
 				<view v-else class="flex flex-wrap">
@@ -103,13 +137,22 @@
 						<text class="iconfont mb-1">&#xe611;</text>
 						<text class="font">暂停</text>
 					</view>
-					<view class="flex flex-column align-center justify-center" style="width: 150rpx;height: 150rpx;" @click="back">
+					<view
+						class="flex flex-column align-center justify-center"
+						style="width: 150rpx;height: 150rpx;"
+						@click="back"
+					>
 						<text class="iconfont mb-1">&#xe64d;</text>
 						<text class="font">退出</text>
 					</view>
 				</view>
 				<view class="f-divider"></view>
-				<view class="flex align-center justify-center" style="height: 90rpx;" hover-class="bg-light" @click="closePopup">
+				<view
+					class=" flex align-center justify-center"
+					style="height: 90rpx;"
+					hover-class="bg-light"
+					@click="closePopup"
+				>
 					<text class="font-md">取消</text>
 				</view>
 			</view>
@@ -118,10 +161,9 @@
 </template>
 
 <script>
-import uniPopup from '../../components/uni-ui/uni-popup/uni-popup.vue';
 import fGift from '../../components/live/f-gift.vue';
 import fDanmu from '../../components/live/f-danmu.vue';
-
+import uniPopup from '../../components/uni-ui/uni-popup/uni-popup.vue';
 import myGifts from '../../common/gifts.js';
 export default {
 	components: {
@@ -135,14 +177,14 @@ export default {
 			content: '',
 			gifts: [],
 			giftActiveId: 0,
-			url: '', //直播服务器地址，暂空
-			mode: 'SD', //标清模式
-			enableCamera: true, //是否启用摄像头
-			position: 'back', //默认摄像头
-			beauty: 0, //美颜度
-			whiteness: 0, //美白度
-			windowHeight: 0, //窗体高度
-			context: null, //上下文
+			url: '',
+			mode: 'SD',
+			enableCamera: true,
+			position: 'back',
+			beauty: 0,
+			whitness: 0,
+			windowHeight: 0,
+			context: null,
 			modeList: [
 				{
 					type: 'SD',
@@ -195,13 +237,11 @@ export default {
 		let res = uni.getSystemInfoSync();
 		this.statusBarHeight = res.statusBarHeight;
 		this.windowHeight = res.windowHeight;
-
 		let options = JSON.parse(e.options);
 		this.mode = options.mode;
 		this.position = options.position;
 		this.beauty = options.beauty;
-		this.whiteness = options.whiteness;
-		// 演示
+		this.whitness = options.whiteness;
 		this.gifts = myGifts;
 	},
 	onReady() {
@@ -212,20 +252,21 @@ export default {
 		popupTitle() {
 			let o = {
 				mode: '画质',
-				beauty: '美白',
-				whiteness: '美颜',
+				beauty: '美颜',
+				whiteness: '美白',
 				more: '更多'
 			};
 			return o[this.popupType];
 		}
 	},
+
 	methods: {
 		handleBottomEvent(item) {
 			this[item.event](item.params);
 		},
 		back() {
 			uni.showModal({
-				content: '是否结束当前直播？',
+				content: '是否要结束当前直播？',
 				success: res => {
 					if (res.confirm) {
 						uni.navigateBack({
@@ -251,7 +292,7 @@ export default {
 		closePopup() {
 			this.$refs.popup.close();
 		},
-		// 切换摄像头
+		// 	切换摄像头
 		switchCamera() {
 			this.context.switchCamera({
 				success: e => {
@@ -259,7 +300,7 @@ export default {
 				}
 			});
 		},
-		// 开启预览
+		// 开启预览模式
 		startPreview() {
 			this.context.startPreview({
 				success: e => {
@@ -296,6 +337,6 @@ export default {
 }
 .btn-icon {
 	width: 80rpx;
-	margin-right: 20rpx;
+	margin-top: 20rpx;
 }
 </style>

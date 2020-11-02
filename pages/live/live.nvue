@@ -1,6 +1,6 @@
 <template>
 	<view class="flex-1">
-		<video src="http://ivi.bupt.edu.cn/hls/cctv14hd.m3u8" autoplay controls="false" class="flex-1"></video>
+		<video src="https://live2.utools.club/live/rXYgzJ12XzD1VTwTwC3B.flv?sign=1604344085-25d925635f602d678426d2778bfa87a7" autoplay controls="false" class="flex-1"></video>
 		<!-- 头部 -->
 		<view style="position: fixed; left: 0; right: 0;" :style="'top:' + statusBarHeight + 'px'">
 			<!-- 个人信息|观看详细信息 -->

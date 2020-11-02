@@ -27,11 +27,7 @@
 				style="left: 90rpx; right: 100rpx; height: 160rpx;background-color: (0,0,0,0.2);"
 			>
 				<view style="height: 120rpx; width: 120rpx;" class="position-relative rounded">
-					<image
-						src="../../static/gift/2.png"
-						style="height: 120rpx; width: 120rpx;"
-						class="rounded-circle"
-					></image>
+					<image src="../../static/gift/2.png" style="height: 120rpx; width: 120rpx;" class="rounded-circle"></image>
 					<text class="text-white position-absolute font" style="left: 0;right: 0; bottom: 0;">更换封面</text>
 				</view>
 				<view class="flex-1 ml-2">
@@ -40,35 +36,19 @@
 				</view>
 			</view>
 			<view class="position-absolute right-0 flex flex-column" style="width: 100rpx;">
-				<view
-					style="height: 120rpx; width: 100rpx;"
-					class="flex flex-column align-center justify-center"
-					@click="switchCamera"
-				>
+				<view style="height: 120rpx; width: 100rpx;" class="flex flex-column align-center justify-center" @click="switchCamera">
 					<text class="iconfont text-white mb-1">&#xe605;</text>
 					<text class="text-white font">翻转</text>
 				</view>
-				<view
-					style="height: 120rpx; width: 100rpx;"
-					class="flex flex-column align-center justify-center"
-					@click="openPopup('mode')"
-				>
+				<view style="height: 120rpx; width: 100rpx;" class="flex flex-column align-center justify-center" @click="openPopup('mode')">
 					<text class="iconfont text-white mb-1">&#xe60c;</text>
 					<text class="text-white font">画质</text>
 				</view>
-				<view
-					style="height: 120rpx; width: 100rpx;"
-					class="flex flex-column align-center justify-center"
-					@click="openPopup('beauty')"
-				>
+				<view style="height: 120rpx; width: 100rpx;" class="flex flex-column align-center justify-center" @click="openPopup('beauty')">
 					<text class="iconfont text-white mb-1">&#xe632;</text>
 					<text class="text-white font">美颜</text>
 				</view>
-				<view
-					style="height: 120rpx; width: 100rpx;"
-					class="flex flex-column align-center justify-center"
-					@click="openPopup('whitness')"
-				>
+				<view style="height: 120rpx; width: 100rpx;" class="flex flex-column align-center justify-center" @click="openPopup('whitness')">
 					<text class="iconfont text-white mb-1">&#xe631;</text>
 					<text class="text-white font">美白</text>
 				</view>
@@ -78,7 +58,7 @@
 			class="position-fixed bg-main flex align-center justify-center rounded-circle "
 			style="left: 100rpx; right: 100rpx; bottom: 100rpx; height: 120rpx;"
 		>
-			<text class="text-white font-md">开始视频直播</text>
+			<text class="text-white font-md" @click="openLiveRoom">开始视频直播</text>
 		</view>
 
 		<uni-popup type="bottom" ref="popup">
@@ -100,32 +80,12 @@
 				</view>
 				<!-- 美颜 -->
 				<view v-else-if="popupType === 'beauty'">
-					<slider
-						:min="0"
-						:max="9"
-						:step="1"
-						:value="beauty"
-						:block-size="18"
-						show-value
-						@change="handleSliderChange"
-					/>
+					<slider :min="0" :max="9" :step="1" :value="beauty" :block-size="18" show-value @change="handleSliderChange" />
 				</view>
 				<!-- 美白 -->
-				<view v-else>
-					<slider
-						:min="0"
-						:max="9"
-						:step="1"
-						:value="whiteness"
-						:block-size="18"
-						show-value
-						@change="handleSliderChange"
-					/>
-				</view>
+				<view v-else><slider :min="0" :max="9" :step="1" :value="whiteness" :block-size="18" show-value @change="handleSliderChange" /></view>
 				<view class="f-divider"></view>
-				<view class="flex align-center justify-center" style="height: 90rpx;" hover-class="bg-light">
-					<text class="font-md">取消</text>
-				</view>
+				<view class="flex align-center justify-center" style="height: 90rpx;" hover-class="bg-light"><text class="font-md">取消</text></view>
 			</view>
 		</uni-popup>
 	</view>
@@ -187,6 +147,19 @@ export default {
 		}
 	},
 	methods: {
+		openLiveRoom(e) {
+			console.log('我的主播间');
+			uni.navigateTo({
+				url:
+					'../live-room/live-room?options=' +
+					JSON.stringify({
+						mode: this.mode,
+						position: this.position,
+						beauty: this.beauty,
+						whiteness: this.whiteness
+					})
+			});
+		},
 		handleSliderChange(e) {
 			this[this.popupType] = e.detail.value;
 		},

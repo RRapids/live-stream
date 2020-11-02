@@ -23,15 +23,15 @@ export default {
 		return {
 			title: 'Hello',
 			list: [
-				{
-					id:0,
-					image:"https://rapids.oss-cn-beijing.aliyuncs.com/logo/15279830-6bd9-457b-a2ca-1f3a2dad5f9b.jpg",
-					url:'http://127.0.0.1:23481/live/WkpSOmmPWeQxEW2sZZC3.flv?sign=1604333576-d0bbc0450f7a3e9982372d5838f0be67',
-					coin:999,
-					hot:999,
-					title:"直播测试",
-					status:'直播中'
-				},
+				// {
+				// 	id:0,
+				// 	image:"https://rapids.oss-cn-beijing.aliyuncs.com/logo/15279830-6bd9-457b-a2ca-1f3a2dad5f9b.jpg",
+				// 	url:'https://live2.utools.club/live/rXYgzJ12XzD1VTwTwC3B.flv?sign=1604344085-25d925635f602d678426d2778bfa87a7',
+				// 	coin:999,
+				// 	hot:999,
+				// 	title:"直播测试",
+				// 	status:'直播中'
+				// },
 				{
 					id: 1,
 					image: 'https://rapids.oss-cn-beijing.aliyuncs.com/logo/15279830-6bd9-457b-a2ca-1f3a2dad5f9b.jpg',
