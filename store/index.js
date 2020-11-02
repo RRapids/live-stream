@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
-// 将登录后的user和token作为状态管理对象，定义actions为登录方法，
-// 调用 的时候用dispatch分发，这样做的好处是可以包含异步操作
+
+import $H from '../common/request.js'
 
 export default new Vuex.Store({
 	state: {
 		user: null,
 		token: null
 	},
-	action: {
+	actions: {
 		login({
 			state
 		}, user) {
@@ -18,6 +18,21 @@ export default new Vuex.Store({
 
 			uni.setStorageSync('user', JSON.stringify(user))
 			uni.setStorageSync('token', user.token)
+		},
+		getUserInfo({
+			state
+		}) {
+			$H.get('/user/info', {
+				token: true,
+				noJump: true,
+				toast: false
+			}).then(res => {
+				state.user = res
+				uni.setStorage({
+					Key: "user",
+					data: JSON.stringify(state.user)
+				})
+			})
 		}
 	}
 })
