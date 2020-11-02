@@ -41,7 +41,30 @@ export default {
 			}
 		};
 	},
-	methods: {}
+	methods: {
+		submit() {
+			let msg = this.type === 'login' ? '登录' : '注册';
+			this.$H.post('/' + this.type, this.form).then(res => {
+				uni.showToast({
+					title: msg + '成功',
+					icon: 'none'
+				});
+				if (this.type === 'reg') {
+					this.changeType();
+					this.form = {
+						username: '',
+						password: '',
+						repassword: ''
+					};
+				}else{
+					this.$store.dispatch('login',res)
+					uni.navigateBack({
+						delta:1
+					})
+				}
+			});
+		}
+	}
 };
 </script>
 

@@ -3527,7 +3527,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ./node_modules/css-loader/dist/runtime/api.js */ 21);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.container {\n\twidth: 750rpx;\n\theight: 100vh;\n\tmargin: 0;\n\tpadding: 100rpx 0 0 0;\n\tbackground-size: cover;\n\tbackground-image: -webkit-linear-gradient(top, #ba7ace 0%, #8745ff 100%);\n\tbackground-image: linear-gradient(to bottom, #ba7ace 0%, #8745ff 100%);\n}\n", ""]);
+exports.push([module.i, "\n.container {\r\n\twidth: 750rpx;\r\n\theight: 100vh;\r\n\tmargin: 0;\r\n\tpadding: 100rpx 0 0 0;\r\n\tbackground-size: cover;\r\n\tbackground-image: -webkit-linear-gradient(top, #ba7ace 0%, #8745ff 100%);\r\n\tbackground-image: linear-gradient(to bottom, #ba7ace 0%, #8745ff 100%);\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
