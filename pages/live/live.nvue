@@ -1,11 +1,11 @@
 <template>
 	<view class="flex-1">
-		<video
+<!-- 		<video
 			src="https://live2.utools.club/live/rXYgzJ12XzD1VTwTwC3B.flv?sign=1604344085-25d925635f602d678426d2778bfa87a7"
 			autoplay
 			controls="false"
 			class="flex-1"
-		></video>
+		></video> -->
 		<!-- 头部 -->
 		<view style="position: fixed; left: 0; right: 0;" :style="'top:' + statusBarHeight + 'px'">
 			<!-- 个人信息|观看详细信息 -->
@@ -135,6 +135,7 @@ export default {
 	},
 	data() {
 		return {
+			info:[],
 			statusBarHeight: 0,
 			content: '',
 			gifts: [],
@@ -153,10 +154,11 @@ export default {
 			});
 		}, 3000);
 	},
-	onLoad() {
+	onLoad(option) {
 		let res = uni.getSystemInfoSync();
 		this.statusBarHeight = res.statusBarHeight;
 		this.gifts = myGifts;
+		console.log(option.data)
 	},
 	methods: {
 		//打开输入弹幕的对话框

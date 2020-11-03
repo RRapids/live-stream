@@ -9,7 +9,7 @@
 			/>
 		</view>
 		<view class="flex flex-wrap">
-			<view class="list-item" v-for="(item, index) in list" :key="index"><f-card :item="item" :index="index" @click="openLive"></f-card></view>
+			<view class="list-item" v-for="(item, index) in list" :key="index"><f-card :item="item" :index="index" @click="openLive(item.id)"></f-card></view>
 		</view>
 
 		<view class="f-divider"></view>

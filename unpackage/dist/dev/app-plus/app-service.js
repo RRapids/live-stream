@@ -129,7 +129,11 @@ var render = function() {
           [
             _c("f-card", {
               attrs: { item: item, index: index, _i: "5-" + $30 },
-              on: { click: _vm.openLive }
+              on: {
+                click: function($event) {
+                  return _vm.openLive(item.id)
+                }
+              }
             })
           ],
           1

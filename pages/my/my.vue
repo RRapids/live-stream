@@ -2,7 +2,7 @@
 	<view>
 		<view class="top flex align-center justify-center"></view>
 		<view style="position: absolute;top: 90rpx;right: 20rpx;" @click="settings">
-			<image src="../../static/logo.png" style="width: 70rpx;height: 70rpx;"></image>
+			<image src="../../static/setting.png" style="width: 70rpx;height: 70rpx;"></image>
 		</view>
 		<view v-if="!user" class="flex align-center">
 			<view class="flex align-center justify-center" style="width: 180rpx;height: 180rpx;">
