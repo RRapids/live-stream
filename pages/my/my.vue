@@ -47,7 +47,7 @@
 			<f-list-item icon="iconzhengzaizhibo" title="我的直播"><text class="text-muted font">0</text></f-list-item>
 			<f-list-item icon="iconfenxiang" title="我的关注"><text class="text-muted font">0</text></f-list-item>
 			<f-list-item icon="iconmore" title="历史记录"></f-list-item>
-			<f-list-item icon="icontuichu" title="退出" @click="logout()"></f-list-item>
+			<!-- <f-list-item icon="icontuichu" title="退出" @click="logout()"></f-list-item> -->
 		</view>
 	</view>
 </template>
@@ -80,7 +80,7 @@ export default {
 		},
 		openLogin() {
 			uni.navigateTo({
-				url: '../login/login'
+				url: '../login1/login1'
 			});
 		},
 		logout() {

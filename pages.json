@@ -86,6 +86,25 @@
             "path" : "pages/login1/login1",
             "style" :                                                                                    
             {
+               "app-plus":{
+				   "titleNView":false
+			   }
+            }
+            
+        }
+        ,{
+            "path" : "pages/user-set/user-set",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "components/uni-ui/uni-status-bar/uni-status-bar",
+            "style" :                                                                                    
+            {
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
