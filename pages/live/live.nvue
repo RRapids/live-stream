@@ -1,6 +1,11 @@
 <template>
 	<view class="flex-1">
-		<video src="https://live2.utools.club/live/rXYgzJ12XzD1VTwTwC3B.flv?sign=1604344085-25d925635f602d678426d2778bfa87a7" autoplay controls="false" class="flex-1"></video>
+		<video
+			src="https://live2.utools.club/live/rXYgzJ12XzD1VTwTwC3B.flv?sign=1604344085-25d925635f602d678426d2778bfa87a7"
+			autoplay
+			controls="false"
+			class="flex-1"
+		></video>
 		<!-- 头部 -->
 		<view style="position: fixed; left: 0; right: 0;" :style="'top:' + statusBarHeight + 'px'">
 			<!-- 个人信息|观看详细信息 -->
@@ -105,7 +110,9 @@
 					</swiper-item>
 				</swiper>
 				<view class="flex align-center justify-end" style="height: 100rpx;">
-					<view class="flex align-center justify-center px-2 mr-3 rounded bg-warning" @click="openCoin"><text class="font">充值</text></view>
+					<view class="flex align-center justify-center px-2 mr-3 rounded bg-warning" @click="openCoin">
+						<text class="font">充值</text>
+					</view>
 					<view class="flex align-center justify-center py-2 px-2 mr-3 rounded bg-main" @click="sendGift">
 						<text class="font text-white">发送</text>
 					</view>
@@ -154,7 +161,9 @@ export default {
 	methods: {
 		//打开输入弹幕的对话框
 		openInput() {
-			this.$refs.input.open();
+			this.$store.dispatch('authMethod', () => {
+				this.$refs.input.open();
+			});
 		},
 		//提交发送弹幕信息
 		sumbit() {
@@ -200,12 +209,12 @@ export default {
 				gift_image: g.image,
 				num: 10
 			});
-			this.closeGift()
+			this.closeGift();
 		},
-		openCoin(){
+		openCoin() {
 			uni.navigateTo({
-				url:'../coin/coin'
-			})
+				url: '../coin/coin'
+			});
 		}
 	}
 };

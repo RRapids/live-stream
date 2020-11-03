@@ -1,7 +1,9 @@
 <template>
 	<view>
 		<view class="top flex align-center justify-center"></view>
-
+		<view style="position: absolute;top: 90rpx;right: 20rpx;" @click="settings">
+			<image src="../../static/logo.png" style="width: 70rpx;height: 70rpx;"></image>
+		</view>
 		<view v-if="!user" class="flex align-center">
 			<view class="flex align-center justify-center" style="width: 180rpx;height: 180rpx;">
 				<image src="../../static/1.jpg" class="rounded-circle" style="width: 105rpx;height: 105rpx;"></image>
@@ -11,11 +13,7 @@
 				<text class="font text-muted">登录体验更多功能</text>
 			</view>
 			<view class="ml-auto mr-3">
-				<view
-					class="border border-main rounded flex align-center justify-center p-2"
-					hover-class="bg-light"
-					@click="openLogin"
-				>
+				<view class="border border-main rounded flex align-center justify-center p-2" hover-class="bg-light" @click="openLogin">
 					<text class="text-main font">立即登录</text>
 				</view>
 			</view>
@@ -36,10 +34,7 @@
 					<text class="font text-muted">满怀期待</text>
 				</view>
 				<view class="ml-auto mr-3">
-					<view
-						class="border border-main rounded flex align-center justify-center p-2"
-						hover-class="bg-light"
-					>
+					<view class="border border-main rounded flex align-center justify-center p-2" hover-class="bg-light">
 						<text class="text-main font">编辑资料</text>
 					</view>
 				</view>
@@ -78,6 +73,11 @@ export default {
 		this.$store.dispatch('getUserInfo');
 	},
 	methods: {
+		settings() {
+			this.authJump({
+				url: '../user-set/user-set'
+			});
+		},
 		openLogin() {
 			uni.navigateTo({
 				url: '../login/login'
