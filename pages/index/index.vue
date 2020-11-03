@@ -1,98 +1,73 @@
 <template>
 	<view>
-		<!-- 轮播图 -->
-		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="200">
-			<swiper-item><image src="../../static/1.jpg" style="width: 750rpx; height: 280rpx;"></image></swiper-item>
-			<swiper-item><image src="../../static/2.jpg" style="width: 750rpx; height: 280rpx;"></image></swiper-item>
-		</swiper>
-		<view class=" flex-2 flex-wrap flex">
-			<list v-for="(item, index) in list" :key="index" :item="item" :index="index" @openLive="openLive"></list>
+		<view class="top flex align-center justify-center">
+			<input
+				style="width: 600rpx;height: 70rpx; background-color: rgba(0,0,0,0.2);"
+				type="text"
+				class="rounded-circle mx-1 pl-5"
+				placeholder="搜索直播间"
+			/>
+		</view>
+		<view class="flex flex-wrap">
+			<view class="list-item" v-for="(item, index) in list" :key="index"><f-card :item="item" :index="index" @click="openLive"></f-card></view>
+		</view>
+
+		<view class="f-divider"></view>
+		<view class="flex align-center justify-center py-3">
+			<text class="font-md text-secondary">{{ loadText }}</text>
 		</view>
 	</view>
 </template>
 
 <script>
-import tab from '../../components/common/tab.vue';
-import list from '../../components/common/list.vue';
+import fCard from '@/components/common/f-card.vue';
 export default {
 	components: {
-		tab,
-		list
+		fCard
 	},
 	data() {
 		return {
-			title: 'Hello',
-			list: [
-				// {
-				// 	id:0,
-				// 	image:"https://rapids.oss-cn-beijing.aliyuncs.com/logo/15279830-6bd9-457b-a2ca-1f3a2dad5f9b.jpg",
-				// 	url:'https://live2.utools.club/live/rXYgzJ12XzD1VTwTwC3B.flv?sign=1604344085-25d925635f602d678426d2778bfa87a7',
-				// 	coin:999,
-				// 	hot:999,
-				// 	title:"直播测试",
-				// 	status:'直播中'
-				// },
-				{
-					id: 1,
-					image: 'https://rapids.oss-cn-beijing.aliyuncs.com/logo/15279830-6bd9-457b-a2ca-1f3a2dad5f9b.jpg',
-					money: 0,
-					colorIndex: 0,
-					moods: 10,
-					title: '标题1',
-					status: '直播中'
-				},
-				{
-					id: 2,
-					image: 'https://rapids.oss-cn-beijing.aliyuncs.com/logo/f45a96cf-820f-46a8-adcd-9d83b251a2da.jpg',
-					money: 0,
-					colorIndex: 1,
-					moods: 10,
-					title: '标题2',
-					status: '已结束'
-				},
-				{
-					id: 3,
-					image: 'https://rapids.oss-cn-beijing.aliyuncs.com/logo/d4fca01c-d7ed-474d-8b80-f4dbd038aadc.jpg',
-					money: 0,
-					colorIndex: 0,
-					moods: 10,
-					title: '标题1',
-					status: '直播中'
-				},
-				{
-					id: 4,
-					image: 'https://rapids.oss-cn-beijing.aliyuncs.com/img/-53981c443f97787.jpg',
-					money: 0,
-					colorIndex: 1,
-					moods: 10,
-					title: '标题2',
-					status: '已结束'
-				},
-				{
-					id: 5,
-					image: 'https://rapids.oss-cn-beijing.aliyuncs.com/logo/efbe1ed0-b8e4-49b1-bb62-e804bc253d2d.jpg',
-					money: 0,
-					colorIndex: 0,
-					moods: 10,
-					title: '标题1',
-					status: '直播中'
-				},
-				{
-					id: 6,
-					image: '../../static/me.jpg',
-					money: 0,
-					colorIndex: 1,
-					moods: 10,
-					title: '标题2',
-					status: '已结束'
-				}
-			]
+			page: 1,
+			loadText: '上拉加载更多',
+			list: []
 		};
 	},
 	onLoad() {
-		// uni.hideTabBar()
+		this.getData();
+	},
+	onPullDownRefresh() {
+		this.page = 1;
+		this.getData().then(res => {
+			uni.showToast({
+				title: '刷新成功',
+				icon: 'none'
+			});
+			uni.stopPullDownRefresh();
+		});
+	},
+	onReachBottom() {
+		if (this.loadText !== '上拉加载更多') {
+			return;
+		}
+		this.loadText = '加载中';
+		this.page++;
+		this.getData();
 	},
 	methods: {
+		getData() {
+			let page = this.page;
+			return this.$H
+				.get('/live/list/' + page)
+				.then(res => {
+					(this.list = page === 1 ? res : [...this.list, ...res]), (this.loadText = res.length < 10 ? '没有更多了' : '上拉加载更多');
+				})
+				.catch(err => {
+					if (this.page > 1) {
+						this.page--;
+						this.loadText = '上拉加载更多';
+					}
+				});
+		},
 		openLive(e) {
 			uni.navigateTo({
 				url: '../live/live'
@@ -103,8 +78,18 @@ export default {
 </script>
 
 <style>
-.content {
-	width: 100%;
-	height: 100%;
+.top {
+	width: 750rpx;
+	height: 260rpx;
+	background-image: url(../../static/1.jpg);
+	background-size: cover;
+	background-image: linear-gradient(to right, #ba7ace 0%, #8745ff 100%);
+}
+.list-item {
+	width: 375rpx;
+	height: 375rpx;
+	padding: 5rpx;
+	box-sizing: border-box;
+	position: relative;
 }
 </style>
