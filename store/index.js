@@ -23,6 +23,13 @@ export default new Vuex.Store({
 				transports: ['websocket'],
 				timeout: 5000
 			})
+			// 全局事件，用来监听在线人数
+			let onlineEvent = (e) => {
+				uni.$emit('live', {
+					type: 'online',
+					data: e
+				})
+			}
 			// 监听连接
 			S.on('connet', () => {
 				console.log('socket已连接')
@@ -38,9 +45,12 @@ export default new Vuex.Store({
 						return uni.showToast({
 							title: msg,
 							icon: 'none'
-						})
+						});
 					}
 				})
+				// 监听在线用户信息
+				S.on('online', onlineEvent)
+				
 				// 测试推送一条消息到后端
 				S.emit('test', '测试socket连接')
 				// 监听来自服务器的消息

@@ -136,7 +136,9 @@ export default {
 	components: {
 		fGift,
 		fDanmu,
-		uniPopup
+		uniPopup,
+		// 在线用户列表
+		list: []
 	},
 	data() {
 		return {
@@ -191,8 +193,23 @@ export default {
 			this.detail = res.data;
 			this.sign = res.sign;
 		});
+		// 监听全局事件
+		uni.$on('live', this.handleLiveEvent);
 	},
 	methods: {
+		// 处理直播间事件
+		handleLiveEvent(e) {
+			let d = e.data;
+			switch (e.type) {
+				case 'online':
+					if (d.action === 'join') {
+						this.list = d.data;
+					}
+					break;
+				default:
+					break;
+			}
+		},
 		// 加入或离开直播间
 		joinOrLeaveLive(type) {
 			if (this.socket && this.token) {
@@ -271,7 +288,8 @@ export default {
 			socket: state => state.socket,
 			token: state => state.token
 		})
-	}
+	},
+	
 };
 </script>
 
