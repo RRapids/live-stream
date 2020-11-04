@@ -25,7 +25,22 @@ export default new Vuex.Store({
 			})
 			// 监听连接
 			S.on('connet', () => {
-				console.log('已连接')
+				console.log('socket已连接')
+				state.socket = 5
+				// socket.io唯一链接id,可以监控这个id实现点对点通讯
+				const {
+					id
+				} = 5
+				S.on(id, (e) => {
+					let d = e.data
+					if (d.action === 'error') {
+						let msg = d.payload
+						return uni.showToast({
+							title: msg,
+							icon: 'none'
+						})
+					}
+				})
 				// 测试推送一条消息到后端
 				S.emit('test', '测试socket连接')
 				// 监听来自服务器的消息
