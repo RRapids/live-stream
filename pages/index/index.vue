@@ -8,8 +8,12 @@
 				placeholder="搜索直播间"
 			/>
 		</view>
+
+		<!-- 列表 -->
 		<view class="flex flex-wrap">
-			<view class="list-item" v-for="(item, index) in list" :key="index"><f-card :item="item" :index="index" @click="openLive(item.id)"></f-card></view>
+			<view class="list-item" v-for="(item, index) in list" :key="index">
+				<f-card :item="item" :index="index" @click="openLive(item.id)"></f-card>
+			</view>
 		</view>
 
 		<view class="f-divider"></view>
@@ -27,9 +31,9 @@ export default {
 	},
 	data() {
 		return {
+			list: [],
 			page: 1,
-			loadText: '上拉加载更多',
-			list: []
+			loadText: '上拉加载更多'
 		};
 	},
 	onLoad() {
@@ -37,19 +41,23 @@ export default {
 	},
 	onPullDownRefresh() {
 		this.page = 1;
-		this.getData().then(res => {
-			uni.showToast({
-				title: '刷新成功',
-				icon: 'none'
+		this.getData()
+			.then(res => {
+				uni.showToast({
+					title: '刷新成功',
+					icon: 'none'
+				});
+				uni.stopPullDownRefresh();
+			})
+			.catch(err => {
+				uni.stopPullDownRefresh();
 			});
-			uni.stopPullDownRefresh();
-		});
 	},
 	onReachBottom() {
-		if (this.loadText !== '上拉加载更多') {
+		if (this.loadText != '上拉加载更多') {
 			return;
 		}
-		this.loadText = '加载中';
+		this.loadText = '加载中...';
 		this.page++;
 		this.getData();
 	},
@@ -59,7 +67,8 @@ export default {
 			return this.$H
 				.get('/live/list/' + page)
 				.then(res => {
-					(this.list = page === 1 ? res : [...this.list, ...res]), (this.loadText = res.length < 10 ? '没有更多了' : '上拉加载更多');
+					(this.list = page === 1 ? res : [...this.list, ...res]),
+						(this.loadText = res.length < 10 ? '没有更多了' : '上拉加载更多');
 				})
 				.catch(err => {
 					if (this.page > 1) {
@@ -68,9 +77,9 @@ export default {
 					}
 				});
 		},
-		openLive(e) {
+		openLive(id) {
 			uni.navigateTo({
-				url: '../live/live'
+				url: '../live/live?id=' + id
 			});
 		}
 	}
@@ -81,7 +90,6 @@ export default {
 .top {
 	width: 750rpx;
 	height: 260rpx;
-	background-image: url(../../static/1.jpg);
 	background-size: cover;
 	background-image: linear-gradient(to right, #ba7ace 0%, #8745ff 100%);
 }

@@ -61,22 +61,13 @@
 
 		<view class="flex align-center px-5 py-3">
 			<view class="flex-1 flex align-center justify-center">
-				<view
-					class="iconfont icon-weixin font-xlg text-white  flex align-center justify-center rounded-circle"
-					style="width: 100rpx;height: 100rpx;background-color: #65CD9F;"
-				></view>
+				<image src="../../static/weixin.png" style="width: 70rpx;height: 70rpx;"></image>
 			</view>
 			<view class="flex-1 flex align-center justify-center">
-				<view
-					class="iconfont icon-QQ font-xlg text-white flex align-center justify-center rounded-circle"
-					style="width: 100rpx;height: 100rpx;background-color: #55ACF5;"
-				></view>
+				<image src="../../static/qq.png" style="width: 70rpx;height: 70rpx;"></image>
 			</view>
 			<view class="flex-1 flex align-center justify-center">
-				<view
-					class="iconfont icon-xinlangweibo font-xlg text-white  flex align-center justify-center rounded-circle"
-					style="width: 100rpx;height: 100rpx;background-color: #EC7E41;"
-				></view>
+				<image src="../../static/weibo.png" style="width: 70rpx;height: 70rpx;"></image>
 			</view>
 		</view>
 

@@ -49,6 +49,7 @@ export default new Vuex.Store({
 			uni.removeStorageSync('user')
 			uni.removeStorageSync('token')
 		},
+		// 登录
 		login({
 			state
 		}, user) {
@@ -58,6 +59,7 @@ export default new Vuex.Store({
 			uni.setStorageSync('user', JSON.stringify(user))
 			uni.setStorageSync('token', user.token)
 		},
+		// 获取用户信息
 		getUserInfo({
 			state
 		}) {

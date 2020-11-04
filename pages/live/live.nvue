@@ -1,21 +1,17 @@
 <template>
 	<view class="flex-1">
-<!-- 		<video
-			src="https://live2.utools.club/live/rXYgzJ12XzD1VTwTwC3B.flv?sign=1604344085-25d925635f602d678426d2778bfa87a7"
-			autoplay
-			controls="false"
-			class="flex-1"
-		></video> -->
 		<!-- 头部 -->
 		<view style="position: fixed; left: 0; right: 0;" :style="'top:' + statusBarHeight + 'px'">
 			<!-- 个人信息|观看详细信息 -->
 			<view style="height: 80rpx;" class="px-2 flex justify-center align-center">
 				<view style="width: 325rpx;background-color: rgba(0,0,0,0.4);" class="flex rounded-circle">
-					<view class="p"><image src="../../static/me.jpg" style="width: 70rpx; height: 70rpx;" class="rounded-circle"></image></view>
+					<view class="p">
+						<image :src="detail.user.avatar || '../../static/me.jpg'" style="width: 70rpx; height: 70rpx;" class="rounded-circle"></image>
+					</view>
 
 					<view class="flex-1 flex flex-column justify-center">
-						<text class="text-white font">Rapid</text>
-						<text class="text-white font-sm">200</text>
+						<text class="text-white font">{{ detail.user.username }}</text>
+						<text class="text-white font-sm">{{ detail.look_count }}</text>
 					</view>
 
 					<view class="p">
@@ -33,7 +29,7 @@
 					</scroll-view>
 					<view class="p">
 						<view class="rounded-circle flex align-center justify-center bg-danger" style="width: 70rpx; height: 70rpx;">
-							<text class="text-white font-sm">999</text>
+							<text class="text-white font-sm">{{ detail.look_count }}</text>
 						</view>
 					</view>
 				</view>
@@ -43,7 +39,9 @@
 			<view style="height: 80rpx;" class="px-2 my-2">
 				<view style="width: 325rpx;background-color: rgba(0,0,0,0.4);" class="flex rounded-circle align-center">
 					<view class="p"><text class="text-warning">金币区</text></view>
-					<view class="flex-1 flex flex-column justify-center"><text class="text-white font">100</text></view>
+					<view class="flex-1 flex flex-column justify-center">
+						<text class="text-white font">{{ detail.coin }}</text>
+					</view>
 				</view>
 			</view>
 
@@ -127,6 +125,8 @@ import fGift from '@/components/live/f-gift.vue';
 import fDanmu from '@/components/live/f-danmu.vue';
 import uniPopup from '@/components/uni-ui/uni-popup/uni-popup.vue';
 import myGifts from '@/common/gifts.js';
+import $H from '../../common/request.js';
+
 export default {
 	components: {
 		fGift,
@@ -135,7 +135,25 @@ export default {
 	},
 	data() {
 		return {
-			info:[],
+			id: 0,
+			detail: {
+				created_time: '',
+				id: 1,
+				title: '',
+				cover: '',
+				user_id: 0,
+				look_count: 0,
+				coin: 0,
+				key: '',
+				status: 0,
+				userId: 0,
+				user: {
+					id: 0,
+					username: '',
+					avatar: ''
+				}
+			},
+			sign: '',
 			statusBarHeight: 0,
 			content: '',
 			gifts: [],
@@ -155,10 +173,17 @@ export default {
 		}, 3000);
 	},
 	onLoad(option) {
+		console.log(option.id);
+		this.id = option.id;
 		let res = uni.getSystemInfoSync();
 		this.statusBarHeight = res.statusBarHeight;
 		this.gifts = myGifts;
-		console.log(option.data)
+		// 请求后端接口，获得该直播间详情数据，包括主播信息，和直播间的签名等数据
+		$H.get('/live/read/' + this.id).then(res => {
+			console.log(res);
+			this.detail = res.data;
+			this.sign = res.sign;
+		});
 	},
 	methods: {
 		//打开输入弹幕的对话框
