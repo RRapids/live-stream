@@ -1,5 +1,8 @@
 <template>
 	<view class="flex-1">
+		<!-- video默认就是在屏幕的中间部分 所以不需要给定位置 -->
+		<video src="rtmp://39.97.173.29:1935/live/exp" style="width: 100vw;height: 400rpx;" autoplay controls class="flex-1"></video>
+
 		<!-- 头部 -->
 		<view style="position: fixed; left: 0; right: 0;" :style="'top:' + statusBarHeight + 'px'">
 			<!-- 个人信息|观看详细信息 -->
