@@ -13,12 +13,13 @@ export default new Vuex.Store({
 		socket: null
 	},
 	actions: {
-		// 连接socket
+		//连接socket
 		connectSocket({
 			state,
 			dispatch
 		}) {
-			const S = io($C.socketUrl, {
+			console.log(12121212)
+			const S = io($C.sorketUrl, {
 				query: {},
 				transports: ['websocket'],
 				timeout: 5000
@@ -30,14 +31,15 @@ export default new Vuex.Store({
 					data: e
 				})
 			}
-			// 监听连接
-			S.on('connet', () => {
+			//监听连接
+			S.on('connect', () => {
 				console.log('socket已连接')
-				state.socket = 5
-				// socket.io唯一链接id,可以监控这个id实现点对点通讯
+				// S.emit('test','测试socket')
+				state.socket = S
+				// socket.io 唯一链接id，可以监控这个id实现对点通讯
 				const {
 					id
-				} = 5
+				} = S
 				S.on(id, (e) => {
 					let d = e.data
 					if (d.action === 'error') {
@@ -50,20 +52,27 @@ export default new Vuex.Store({
 				})
 				// 监听在线用户信息
 				S.on('online', onlineEvent)
-				
-				// 测试推送一条消息到后端
-				S.emit('test', '测试socket连接')
-				// 监听来自服务器的消息
+				// 监听来自服务器端的消息
 				S.on(S.id, (e) => {
-					console.log(e);
+					console.log(e)
 				})
 			})
-			// 监听失败
+			// 移除监听事件
+			const removeListener = () => {
+				if (S) {
+					S.removeListener('online', onlineEvent)
+				}
+			}
+			//监听失败
 			S.on('error', () => {
-				console.log('连接失败')
+				removeListener()
+				state.socket = null
+				console.log('socket连接失败')
 			})
-			// 监听断开
+			//监听断开
 			S.on('disconnect', () => {
+				removeListener()
+				state.socket = null
 				console.log('已断开')
 			})
 		},
