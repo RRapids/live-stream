@@ -31,7 +31,7 @@ export default new Vuex.Store({
 					data: e
 				})
 			}
-
+			
 			// 全局事件，用来监听发送弹幕
 			let commentEvent = (e) => {
 				uni.$emit('live', {

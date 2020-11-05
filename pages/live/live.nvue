@@ -283,7 +283,7 @@ export default {
 			
 			if (!this.token && !this.socket) {
 				uni.navigateTo({
-					url: '../login/login',
+					url: '../login1/login1',
 				});
 				return uni.showToast({
 					title: '请先登录',
