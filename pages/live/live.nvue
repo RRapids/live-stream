@@ -1,39 +1,28 @@
 <template>
 	<view class="flex-1">
-		<!-- video默认就是在屏幕的中间部分 所以不需要给定位置 -->
-		<video src="rtmp://39.97.173.29:1935/live/exp" style="width: 100vw;height: 400rpx;" autoplay controls class="flex-1"></video>
+		<video class="flex-1" :src="src" style="width: 100vw;height: 400rpx;" :autoplay="true" controls="false"></video>
 
 		<!-- 头部 -->
-		<view style="position: fixed; left: 0; right: 0;" :style="'top:' + statusBarHeight + 'px'">
+		<view style="position: fixed;left: 0;right: 0;" :style="'top:' + statusBarHeight + 'px'">
 			<!-- 个人信息|观看详细信息 -->
-			<view style="height: 80rpx;" class="px-2 flex justify-center align-center">
+			<view style="height: 80rpx;" class="px-2 flex justify-between align-center">
 				<view style="width: 325rpx;background-color: rgba(0,0,0,0.4);" class="flex rounded-circle">
-					<view class="p">
-						<image :src="detail.user.avatar || '../../static/me.jpg'" style="width: 70rpx; height: 70rpx;" class="rounded-circle"></image>
-					</view>
-
+					<view class="p"><image :src="detail.user.avatar || '/static/me.jpg'" style="width: 70rpx;height: 70rpx;" class="rounded-circle"></image></view>
 					<view class="flex-1 flex flex-column justify-center">
 						<text class="text-white font">{{ detail.user.username }}</text>
 						<text class="text-white font-sm">{{ detail.look_count }}</text>
 					</view>
-
 					<view class="p">
-						<view class="rounded-circle flex align-center justify-center bg-danger" style="width: 70rpx;height: 70rpx;">
-							<text class="text-white">+</text>
-						</view>
+						<view class="rounded-circle flex align-center bg-main justify-center" style="width: 70rpx;height: 70rpx;"><text class="text-white">+</text></view>
 					</view>
 				</view>
-
 				<view style="width: 325rpx;background-color: rgba(0,0,0,0.4);" class="flex rounded-circle">
-					<!-- 实时在线观看用户情况 -->
+					<!-- 实施在线观看用户情况 -->
 					<scroll-view scroll-x="true" class="flex-1 flex">
-						<view class="p" v-for="(item, index) in list" :key="index">
-							<image class="rounded-circle" :src="item.avatar || '/static/tabbar/min.png'" style="width: 70rpx;height: 70rpx;"></image>
-						</view>
+						<view class="p" v-for="(item, index) in list" :key="index"><image :src="item.avatar || '/static/user.png'" style="width: 70rpx;height: 70rpx;" class="rounded-circle"></image></view>
 					</scroll-view>
 					<view class="p">
 						<view class="rounded-circle flex align-center justify-center bg-main" style="width: 70rpx;height: 70rpx;">
-							<!-- align-center justify-center 调节这两个属性使之text在view中水平垂直都居中 达到在中间的效果 -->
 							<!-- 实时在线观看人数 -->
 							<text class="text-white font-sm">{{ list.length }}</text>
 						</view>
@@ -43,111 +32,108 @@
 
 			<!-- 金币 -->
 			<view style="height: 80rpx;" class="px-2 my-2">
-				<view style="width: 325rpx;background-color: rgba(0,0,0,0.4);" class="flex rounded-circle align-center">
-					<view class="p"><text class="text-warning">金币区</text></view>
+				<!-- <text>金币区</text> -->
+				<view class="flex rounded-circle align-center" style="width: 325rpx;background-color: rgba(0,0,0,0.4);">
+					<view class="p"><text class="text-warning">金币</text></view>
 					<view class="flex-1 flex flex-column justify-center">
 						<text class="text-white font">{{ detail.coin }}</text>
 					</view>
 				</view>
 			</view>
 
-			<!-- 礼物区 -->
-			<f-gift ref="gift"></f-gift>
-		</view>
+			<!-- 收到的礼物 -->
+			<!-- <view style="height: 300rpx;" class="bg-main">
+				<text>礼物区</text>
+			</view> -->
+			<f-glist ref="gift"></f-glist>
 
-		<f-danmu ref="danmu"></f-danmu>
+			<!-- 弹幕 -->
+			<f-danmu ref="danmu"></f-danmu>
 
-		<!-- 输入框弹出层 -->
-		<uni-popup type="bottom" ref="input">
-			<view class="bg-white flex align-center px-3" style="height: 120rpx;">
-				<input type="text" v-model="content" class="border rounded flex-1 px-3 font-md" placeholder="说点什么吧..." style="height: 80rpx;" />
-				<view
-					class="flex align-center justify-center py-2 px-2 ml-3 rounded"
-					@click="sumbit"
-					:class="content === '' ? 'bg-main-disabled' : 'bg-main'"
-				>
-					<text class="font text-white">发送</text>
+			<!-- 底部 -->
+			<view style="height: 120rpx;" class="flex align-center justify-between fixed-bottom">
+				<view class="px-2">
+					<view class="btn px-3" @tap="openInput"><text class="text-white font">说点什么...</text></view>
+				</view>
+				<view class="flex align-center">
+					<view class="btn btn-icon"><text class="iconfont text-white" style="font-size: 40px;">&#xe633;</text></view>
+					<view class="btn btn-icon bg-main" @click="openGift"><text class="iconfont">&#xe67c;</text></view>
+					<view class="btn btn-icon"><text class="iconfont text-white">&#xe7cd;</text></view>
+					<view class="btn btn-icon" @click="back"><text class="iconfont text-white">&#xe607;</text></view>
 				</view>
 			</view>
-		</uni-popup>
 
-		<!-- 底部 -->
-		<view style="height: 120rpx;" class="flex align-center justify-between fixed-bottom">
-			<view class="px-2" @click="openInput">
-				<view class="btn px-3"><text class="text-white font">说点什么...</text></view>
-			</view>
-			<view class="flex align-center">
-				<view class="btn btn-icon"><text class="iconfont text-white" style="font-size: 40px;">&#xe633;</text></view>
-				<view class="btn btn-icon bg-main" @click="openGift"><text class="iconfont">&#xe67c;</text></view>
-				<view class="btn btn-icon"><text class="iconfont text-white">&#xe7cd;</text></view>
-				<view class="btn btn-icon" @click="back"><text class="iconfont text-white">&#xe607;</text></view>
-			</view>
-		</view>
-
-		<!-- 礼物弹出层 -->
-		<uni-popup type="bottom" ref="giftPopup">
-			<view class="bg-white" style="width: 750rpx;height: 550rpx;">
-				<view class="flex justify-between align-center" style="height: 100rpx;">
-					<text class="text-main font-md ml-3">礼物</text>
-					<view class="flex align-center justify-center" style="width: 100rpx;height: 100rpx;" @click="closeGift">
-						<text class="iconfont">&#xe607;</text>
-					</view>
-				</view>
-				<swiper :indicator-dots="true" :duration="500" style="height: 350rpx;" class="border-bottom border-top">
-					<swiper-item>
-						<view class="flex flex-wrap">
-							<view
-								style="width: 187rpx; height: 175rpx;"
-								class="flex flex-column justify-center align-center"
-								v-for="(item, index) in gifts"
-								:key="index"
-								:class="giftActiveId === item.id ? 'border border-main' : ''"
-								@click="giftActiveId = item.id"
-							>
-								<image :src="item.image" style="width: 100rpx; height: 100rpx;" class="rounded"></image>
-								<view class="flex mt-1">
-									<text class="text-warning font mr-1">{{ item.name }}</text>
-									<text class="text-secondary font">{{ item.coin }}</text>
-								</view>
-							</view>
-						</view>
-					</swiper-item>
-				</swiper>
-				<view class="flex align-center justify-end" style="height: 100rpx;">
-					<view class="flex align-center justify-center px-2 mr-3 rounded bg-warning" @click="openCoin">
-						<text class="font">充值</text>
-					</view>
-					<view class="flex align-center justify-center py-2 px-2 mr-3 rounded bg-main" @click="sendGift">
+			<!-- 输入框弹出层 -->
+			<uni-popup type="bottom" ref="input">
+				<view class="bg-white flex align-center px-3" style="height: 120rpx;">
+					<input type="text" v-model="content" class="border rounded flex-1 px-3 font-md" placeholder="说点什么..." style="height: 80rpx;" />
+					<view class="flex align-center justify-center py-2 px-2 ml-3 rounded" @click="submit" :class="content === '' ? 'bg-main-disabled' : 'bg-main'">
 						<text class="font text-white">发送</text>
 					</view>
 				</view>
-			</view>
-		</uni-popup>
+			</uni-popup>
+
+			<!-- 送礼物弹出层 -->
+			<uni-popup type="bottom" ref="giftPopup">
+				<view class="bg-white" style="width: 750rpx;height: 550rpx;">
+					<view style="height: 100rpx;" class="flex justify-between align-center">
+						<text class="text-main font-md ml-3">礼物</text>
+						<view class="flex align-center justify-center" style="width: 100rpx;height: 100rpx;" @click="closeGift"><text class="iconfont">&#xe607;</text></view>
+					</view>
+					<swiper :indicator-dots="true" :duration="500" style="height: 350rpx;" class="border-bottom border-top">
+						<swiper-item>
+							<view class="flex flex-wrap">
+								<view
+									style="width: 187rpx;height: 175rpx;"
+									class="flex flex-column justify-center align-center"
+									v-for="(item, index) in gifts"
+									:key="index"
+									:class="giftActiveId === item.id ? 'border border-main' : ''"
+									@click="giftActiveId = item.id"
+								>
+									<image :src="item.image" style="width: 100rpx;height: 100rpx;" class="rounded"></image>
+									<view class="flex mt-1">
+										<text class="text-warning font mr-1">{{ item.name }}</text>
+										<text class="text-secondary font">{{ item.coin }}</text>
+									</view>
+								</view>
+							</view>
+						</swiper-item>
+					</swiper>
+					<view style="height: 100rpx;" class="flex align-center justify-end">
+						<view class="flex align-center justify-center py-2 px-2 mr-3 rounded bg-warning" @click="openCoin"><text class="font">充值</text></view>
+						<view class="flex align-center justify-center py-2 px-2 mr-3 rounded bg-main " @click="sendGift"><text class="font text-white">发送</text></view>
+					</view>
+				</view>
+			</uni-popup>
+		</view>
 	</view>
 </template>
 
 <script>
-import $H from '../../common/request.js';
-import $C from '../../common/config.js';
-import { mapState } from 'vuex';
 import fGift from '@/components/live/f-gift.vue';
 import fDanmu from '@/components/live/f-danmu.vue';
 import uniPopup from '@/components/uni-ui/uni-popup/uni-popup.vue';
 import myGifts from '@/common/gifts.js';
-
+import req from '@/common/request.js';
+import $C from '@/common/config.js';
+import { mapState } from 'vuex';
 export default {
 	components: {
 		fGift,
 		fDanmu,
-		uniPopup,
-		// 在线用户列表
-		list: []
+		uniPopup
+	},
+	mounted() {
+		// 加入直播间
+		this.joinOrLeaveLive('join');
+		console.log('加入直播间');
 	},
 	data() {
 		return {
 			id: 0,
 			detail: {
-				created_time: '',
+				create_time: '',
 				id: 1,
 				title: '',
 				cover: '',
@@ -167,59 +153,74 @@ export default {
 			statusBarHeight: 0,
 			content: '',
 			gifts: [],
-			giftActiveId: 0
+			giftActiveId: 0,
+			// 在线用户列表
+			list: []
 		};
 	},
-	mounted() {
-		// 加入直播间
-		this.joinOrLeaveLive('join');
-		// 送礼物演示
-		setInterval(() => {
-			this.$refs.gift.send({
-				username: 'KK',
-				avatar: '',
-				gift_name: '蛋糕',
-				gift_image: '/static/gift/3.png',
-				num: 1
-			});
-		}, 3000);
-	},
-	onLoad(option) {
-		console.log(option.id);
-		this.id = option.id;
+	onLoad(e) {
+		this.id = e.id;
+		console.log(this.id);
 		let res = uni.getSystemInfoSync();
 		this.statusBarHeight = res.statusBarHeight;
 		this.gifts = myGifts;
-		// 请求后端接口，获得该直播间详情数据，包括主播信息，和直播间的签名等数据
-		$H.get('/live/read/' + this.id).then(res => {
-			console.log(res);
+		//请求后端接口，获得该直播间详情数据，包括主播信息，和直播间的签名等数据
+		req.get('/live/read/' + this.id).then(res => {
+			// console.log(res);
 			this.detail = res.data;
+			// console.log(this.detail);
 			this.sign = res.sign;
 		});
 		// 监听全局事件
 		uni.$on('live', this.handleLiveEvent);
 	},
-	methods: {
-		// 返回上一层
-		back() {
-			uni.navigateBack({
-				delta: 1
-			});
+	destroyed() {
+		console.log('离开直播间');
+		// 离开直播间
+		this.joinOrLeaveLive('leave');
+		// 移除全局事件
+		uni.$off('live', this.handleLiveEvent);
+	},
+	computed: {
+		src() {
+			if (this.detail.key === '' || this.sign === '') {
+				return '';
+			}
+			return `http://live2.utools.club/live/${this.detail.key}.flv?sign=${this.sign}`;
 		},
-		// 处理直播间事件
-		handleLiveEvent(e) {
+		...mapState({
+			socket: state => state.socket,
+			token: state => state.token
+		})
+	},
+	methods: {
+		//处理直播间事件
+		handleLiveEvent(e) { 
+			// console.log(e);
 			let d = e.data;
 			switch (e.type) {
 				case 'online':
 					if (d.action === 'join') {
 						this.list = d.data;
 					}
+					if (d.action === 'leave') {
+						this.list = d.data;
+					}
+					break;
+				case 'comment':
+					this.$refs.danmu.send({
+						id: d.id,
+						name: d.user.name,
+						content: d.content
+					})
+					this.content = '';
+					this.$refs.input.close();
 					break;
 				default:
 					break;
 			}
 		},
-		// 加入或离开直播间
+		//加入或者离开直播间
 		joinOrLeaveLive(type) {
 			if (this.socket && this.token) {
 				this.socket.emit(type + 'Live', {
@@ -228,37 +229,21 @@ export default {
 				});
 			}
 		},
-		//打开输入弹幕的对话框
-		openInput() {
-			this.$store.dispatch('authMethod', () => {
-				this.$refs.input.open();
+		//跳转到充值页面
+		openCoin() {
+			uni.navigateTo({
+				url: '../coin/coin'
 			});
 		},
-		//提交发送弹幕信息
-		sumbit() {
-			if (this.content === '') {
-				return;
-			}
-			this.$refs.danmu.send({
-				id: Math.random() * 100, //随机生成一个id
-				name: 'YTF',
-				content: this.content
-			});
-			this.content = '';
-			this.$refs.input.close();
-		},
-		//返回上一层页面
-		back() {
-			uni.navigateBack({
-				delta: 1
-			});
-		},
+		//打开礼物框
 		openGift() {
 			this.$refs.giftPopup.open();
 		},
+		//关闭礼物框
 		closeGift() {
 			this.$refs.giftPopup.close();
 		},
+		//发送礼物
 		sendGift() {
 			if (this.giftActiveId === 0) {
 				return uni.showToast({
@@ -272,42 +257,61 @@ export default {
 			}
 			let g = this.gifts[index];
 			this.$refs.gift.send({
-				username: 'YTF',
-				avatar: '',
+				username: this.$store.state.user.username,
+				avatar: this.$store.state.user.avatar,
 				gift_name: g.name,
 				gift_image: g.image,
 				num: 10
 			});
 			this.closeGift();
 		},
-		openCoin() {
-			uni.navigateTo({
-				url: '../coin/coin'
+		//打开输入弹幕的对话框
+		openInput() {
+			this.$store.dispatch('authMethod', () => {
+				this.$refs.input.open();
 			});
-		}
-	},
-	computed: {
-		src() {
-			if (this.detail.key == '' || this.sign == '') {
-				return 'https://live2.utools.club/live/${this.detail.key}.flv?sign=${this.sign}';
-			}
-			return '';
 		},
-		...mapState({
-			socket: state => state.socket,
-			token: state => state.token
-		})
-	},
-	destroyed() {
-		// 离开直播间
-		this.joinOrLeaveLive('leave');
-		// 一处全局事件
-		uni.$off('live', this.handleLiveEvent());
+		//提交发送弹幕消息
+		submit() {
+			console.log('发弹幕');
+			if (this.content === '') {
+				return uni.showToast({
+					title: '评论内容不能为空',
+					icon: 'none'
+				});
+			}
+			
+			if (!this.token && !this.socket) {
+				uni.navigateTo({
+					url: '../login/login',
+				});
+				return uni.showToast({
+					title: '请先登录',
+					icon: 'none'
+				});
+			}
+			
+			if (this.socket) {
+				this.socket.emit('comment', {
+					live_id: this.id,
+					data: this.content,
+					token: this.token
+				})
+			}
+		},
+		back() {
+			uni.navigateBack({
+				delta: 1
+			});
+		},
+		goback() {
+			uni.navigateBack({});
+		}
 	}
 };
 </script>
 
-<style>
+<style scoped>
 .btn {
 	height: 80rpx;
 	border-radius: 100rpx;
