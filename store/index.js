@@ -24,6 +24,7 @@ export default new Vuex.Store({
 				timeouut: 5000
 			})
 
+
 			// 全局事件，用来监听在线人数
 			let onlineEvent = (e) => {
 				uni.$emit('live', {
@@ -31,7 +32,7 @@ export default new Vuex.Store({
 					data: e
 				})
 			}
-			
+
 			// 全局事件，用来监听发送弹幕
 			let commentEvent = (e) => {
 				uni.$emit('live', {
@@ -39,6 +40,18 @@ export default new Vuex.Store({
 					data: e
 				})
 			}
+
+
+			//全局时间，用来监听发送礼物
+			let giftEvent = (e) => {
+				uni.$emit('live', {
+					type: "gift",
+					data: e
+				})
+			}
+
+
+
 
 			//监听连接
 			S.on('connect', () => {
@@ -65,19 +78,15 @@ export default new Vuex.Store({
 				S.on('online', onlineEvent);
 				// 监听弹幕信息
 				S.on('comment', commentEvent);
-				// // 测试推送一条消息到后端
-				// S.emit('test', '测试socket连接')
-
-				// // 监听来自服务器端的消息
-				// S.on(S.id, (e) => {
-				// 	console.log(e);
-				// })
+				// 监听礼物接受
+				S.on('gift', giftEvent)
 			})
-
+			// 移除监听事件 
 			const removeListener = () => {
 				if (S) {
 					S.removeListener('online', onlineEvent)
 					S.removeListener('comment', commentEvent)
+					S.removeListener('gift', giftEvent)
 				}
 			}
 
