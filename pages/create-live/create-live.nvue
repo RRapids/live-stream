@@ -26,8 +26,8 @@
 				class="position-absolute rounded p-2 flex align-center"
 				style="left: 90rpx; right: 100rpx; height: 160rpx;background-color: (0,0,0,0.2);"
 			>
-				<view style="height: 120rpx; width: 120rpx;" class="position-relative rounded">
-					<image src="../../static/gift/2.png" style="height: 120rpx; width: 120rpx;" class="rounded-circle"></image>
+				<view style="height: 120rpx; width: 120rpx;" class="position-relative rounded" @click="chooseCover">
+					<image :src="form.cover || '../../static/gift/2.png'" style="height: 120rpx; width: 120rpx;"></image>
 					<text class="text-white position-absolute font" style="left: 0;right: 0; bottom: 0;">更换封面</text>
 				</view>
 				<view class="flex-1 ml-2">
@@ -93,6 +93,8 @@
 
 <script>
 import uniPopup from '../../components/uni-ui/uni-popup/uni-popup.vue';
+import $H from '@/common/request.js';
+import $C from '../../common/config.js';
 export default {
 	components: {
 		uniPopup
@@ -122,7 +124,11 @@ export default {
 					desc: '超清'
 				}
 			],
-			popupType: 'mode'
+			popupType: 'mode',
+			form: {
+				title: '',
+				cover: ''
+			}
 		};
 	},
 	// 监听页面加载，其参数为上个页面传递的数据，参数类型为Object（用于页面传参）
@@ -147,17 +153,37 @@ export default {
 		}
 	},
 	methods: {
+		chooseCover() {
+			uni.chooseImage({
+				count: 1,
+				success(res) {
+					$H.upload(
+						'/upload',
+						{
+							filePath: res.tempFilePaths[0]
+						},
+						p => {
+							console.log(p);
+						}
+					).then(res => {
+						this.form.cover = $C.imageUrl + res.url;
+					});
+				}
+			});
+		},
 		openLiveRoom(e) {
-			console.log('我的主播间');
+			$H.post('/live/create', this.form, {
+				token: true
+			}).then(res => {
+				let options = {
+					mode: this.mode,
+					position: this.position,
+					beauty: this.beauty,
+					whiteness: this.whiteness
+				};
+			});
 			uni.navigateTo({
-				url:
-					'../live-room/live-room?options=' +
-					JSON.stringify({
-						mode: this.mode,
-						position: this.position,
-						beauty: this.beauty,
-						whiteness: this.whiteness
-					})
+				url: '../live-room/live-room?options=${JSON.stringify(options)}&data=${encodeURIComponent(JSON.stringify(res))}'
 			});
 		},
 		handleSliderChange(e) {
